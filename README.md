@@ -8,7 +8,8 @@
 ## Description(prev papers)
 
 - [PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/shunsukesaito/PIFu) <br>
-Perozzi, B., Al-Rfou, R., & Skiena, S. (2014, August). Deepwalk: Online learning of social representations. In Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining (pp. 701-710). ACM.
+1. introduction:
+   it is already possible to infer relatively accurate 3D surfaces from images with the help of parametric models, data-driven techniques, or deep neural networks. 
 - 
 
 An in-depth paragraph about your project and overview of use.
