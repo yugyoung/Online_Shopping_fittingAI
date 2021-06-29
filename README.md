@@ -7,7 +7,8 @@
 
 ## Description(prev papers)
 
-*- [PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/shunsukesaito/PIFu) <br> PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization
+*[PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/shunsukesaito/PIFu) <br>
+Perozzi, B., Al-Rfou, R., & Skiena, S. (2014, August). Deepwalk: Online learning of social representations. In Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining (pp. 701-710). ACM.
 - 
 
 An in-depth paragraph about your project and overview of use.
