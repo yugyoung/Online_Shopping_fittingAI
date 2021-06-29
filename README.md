@@ -7,7 +7,7 @@
 
 ## Description(prev papers)
 
-* PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization
+*- [PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/shunsukesaito/PIFu) <br> PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization
 - 
 
 An in-depth paragraph about your project and overview of use.
