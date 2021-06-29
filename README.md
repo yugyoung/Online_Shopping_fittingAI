@@ -1,9 +1,9 @@
 # Online_Shopping_fittingAI
 
 
-# Project Summary: \n2D image input --> changing cloth --> 3D upper body reconstruction output(clothed human digitization)
+# Project Summary
 
-Simple overview of use/purpose.
+2D image input --> changing cloth --> 3D upper body reconstruction output(clothed human digitization)
 
 ## Description(prev papers)
 
