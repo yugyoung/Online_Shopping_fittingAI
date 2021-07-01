@@ -1,0 +1,123 @@
+model: end-to-end & unified digitization인 high-resolution 3D shapes 생성.
+
+<Introduction>
+- 이미 image에서 3D surface를 infer하는 방법은 여러가지: parametric models, data-driven techniques, or deep neural networks.
+- PIFu 는 3D deep learning 이며 textured surface inference of clothed 3D humans from a single or multiple input images문제를 해결.
+- 기존의 2D image processing model들은 fully-convolutional network architecture의 이점을 충분히 이용할 수 있었찌만, 3D domain에서는 voxel representation이 memory intensive nature문제 때문에 fully-convlutional manner의 이점이 제한된다.
+(제한되는 것: fine-scale detailed surfaces)
+
+
+Encoder 역할: per-pixel feature vector에서 global context(position)배워
+그리고
+이 per-pixel feature vector와 z-depth alogn outgoing camera ray(from this pixel)에서 implicit function을 배워.
+implicit function역할: 3D point와 일치할는 z-depth가 surface의 안일지 밖일지 분류.
+
+-----
+핵심
+-----
+* Unseen region을 어떻게? 
+- Singlue view input: multi-view stereo photogrammetry 또는 otehr 3D sacnning techniques과 유사한 cmoplete model을 생성.
+- Multi-view stereo constrinats에서는: Since producing a complete textured mesh is already possible from a single input image, adding more views only imporves ourresults further by providing additional information for unseen regions.
+
+
+* per-vertex color(texture)를 어떻게?
+- to regress RGB values at each queried point along the ray, PIFu는 자연스럽게 연결된 부분을 infer.
+
+
+
+<Related Work>
+
+------
+Single-View 3D Human Digitization
+------
+- strong prior를 요구하기 때문에, parametric models of human bodies&shapes가 널리 쓰임.
+- mannual annotation(ex. Silhouettes) 도 자주 statistical body model을 초기에 fitting할 때 사용.
+- DNN을 이용해서 pose/shape param을 추정하려면 part segmentation을 input으로 줘야해.
+- parametric model을 naked numan body만 생성.
+: 보통 skin-tight clothing을 위해서는 displacement vector를 each vertex마다 사용.
+
+------
+핵심
+------
+ * 옷 들의 complex topology를 어떻게 재현?
+- Template-free methods(Ex. BodyNet)은 voxel representation을 바로 재현할 수 있도록 학습.
+하지만 voxel representation을 위해서는 큰 memory requirements가 필요하기 때문에 
+종종 fine-scale detail이 무시된다...ㅜㅜ
+==> 딥러닝으로 직접적으로 일일이 3D voxel representation으로 옷을 재현하려면 메모리 한계로 거의 불가능..
+
+- 그래서 memory 대안으로, single image에서 새로운 silhouette를 합성해서 multi-view inference를 구해보자는 대안이 나옴.
+하지만 이 또한, concave regions are difficult to infer as well as consistently generated views임.
+- 따라서 현재까지 fine-scale details는 cannot be produced reliably.
+
+--> 하지만 우리 PIFu는 메모리 효율도 좋고 fine-scale detilas을 잘 capture하고 per-vertex color를 잘 capture할 수 있어!
+
+
+-----
+Multi-View 3D Human Digitization
+-----
+- 한계: studio settings & calibrated sensors.
+
+- 첫 시도는 based on visual hulls: multiple views 부터의 silhouettes를 사용. to carve out the visible areas of a capture volume.
+- 보통 camera 가 많으면 reasonable reconstruction이 됨.
+: but, 1. concavities are inherently challenging to handle.
+2. accurate geometries can be obtained using multi-view stereo constraints or using controlled illumination.
+
+따라서, 몇몇 method는 parametric body model을 사용.
+또한, motion cues의 사용도 additional prior에 소개되었다.
+
+일반적으로, multi-view가 sinlge-view보다 성능이 좋음.
+
+-----
+middle ground solution 
+-----
+- getnerate plausible 3D surfaces from very sparse views.
+- [12] 는 3D convolutional LSTM을 사용해서 3D voxel representatino을 arbitrary views에서 예측.
+이렇게, voxel자체에 의지하여 3D surfaces를 건설하는 것은 memory 부담이야 ㅜㅜ
+and prevents the capture of high-frequency details.
+
+----
+Texture Inference
+----
+unseen region이 역시 문제 --> 결국 texture문제는 view-synthesis approaches(single image에서 novel view를 예측하는)것과 같음.
+[39]는 unseen인 back view에 대한 img synthesis tecxh를 소개한다.
+--> 이러한 front/back views는 3D mesh의 texture에 사용된다.
+하지만, self-occluding regions과 side views는 다룰 수 없다.
+
+==> 따라서, image inpainting problem과 유사. 
+--> PIFu는 per vertex color를 in an end-to-end fahsion에서 예측할 수 있따.
+and can handle surfaces with arbitrary topology.
+
+
+<PiFu: Pixel-Aligned Implicit Function>
+완성품: 1. 3D geometry를 가져 2. detail챙기면서 texture of clothed human을 가져.
+핵심: PIFu는 mem 효율적이고 3D 공간에 따라 3D representation.
+
+MLP로 표현된 => (f)continuous Implicit functino: functino f의 level set처럼 surface define.
+이렇게 구성하면 space in which the surface is embedded를 명시적으로 store할 필요 없음.
+(g) convolutional image encoder.
+surface는 as a level set of f(F(x), z(X)) = s:로 정의.( s는 실수로 정의됨.)
+
+X: 3D point
+x = ㅠ(x): 2D projection 
+z(X): camera coordinate space에서의 depth value.
+
+F(x) = g(I(x))는 x에서의 image feature. (enc 통과 후)
+
+pixel-aligned feature F(x)는 bilinear sampling을 사용. 왜냐하면 X의 2D projection은 continuous space에서 정의되기 때문.
+
+
+-----
+핵심
+-----
+* local detail어떻게 보존?
+- 3D space with pixel-aligned image features에서 global feature를 찾는게 아니라 implicit function을 배우기 때문에 local detail을 보존할 수 있는 function을 배운다.
+- PIFu의 continuous nater 는 자연스레 메모리 효율적으로 arbitrary topology의 detailed geometry를 생성할 수 있게 함.
+- Moreover, PIFu can be cast as a general framework that can be extended to various co-domains such as RGB colors.
+
+
+<Dgitization Pipeline>
+
+
+
+
+ 
