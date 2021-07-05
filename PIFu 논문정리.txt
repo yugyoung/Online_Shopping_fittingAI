@@ -1,4 +1,5 @@
 model: end-to-end & unified digitization인 high-resolution 3D shapes 생성.
+surface reconstruction & texture inference.
 
 <Introduction>
 - 이미 image에서 3D surface를 infer하는 방법은 여러가지: parametric models, data-driven techniques, or deep neural networks.
@@ -98,7 +99,7 @@ MLP로 표현된 => (f)continuous Implicit functino: functino f의 level set처�
 surface는 as a level set of f(F(x), z(X)) = s:로 정의.( s는 실수로 정의됨.)
 
 X: 3D point
-x = ㅠ(x): 2D projection 
+x = ㅠ(X): 2D로의 projection 
 z(X): camera coordinate space에서의 depth value.
 
 F(x) = g(I(x))는 x에서의 image feature. (enc 통과 후)
@@ -116,8 +117,63 @@ pixel-aligned feature F(x)는 bilinear sampling을 사용. 왜냐하면 X의 2D 
 
 
 <Dgitization Pipeline>
+- PIFu surface reconstruction은 continuous insdie/outside probability field of a clothed human, in which iso-surface can be easily extracted을 예측한다.
+- PIFu for texture inference(Tex-PIFu)은 3D points의 RGB 값을 내놓는다.
+(enabling texture inference in self-occluded surface regions/ shapes of arbitrary topology).
+- more view가 이용가능할 수록 higher fidelity results가 생성된다.
+
+---------------
+Single-View Sufrace Reconstruction
+---------------
+- we represent the ground truth surface as a 0.5 level-set of a continuous 3D occupancy field:
+(2) 수식
+
+
+----
+핵심
+-----
+* Iso-surface를 어떻게 추출? 
+- Marching Cube algorithm
+
+
+----
+Spatial Sampling
+----
+- training data의 resolution은 implicit funct의 표현력과 정확도에 있어서 중요한 역할을 한다.
+- (mem에 부담되는) voxel-based methods와 달리, PIFu는 discretization of ground truth 3D mesh를 요구하지 않는다.
+: 요구하지 않고 대신 사용하는 건, directly sample 3D points on the fly함(OG resolution의 ground truth mesh에서 ray tracing algorithm을 이용해서 추출).
+- Note that this operation requires water-tight meshes.
+
+** ray tracing algorithm 사용. <-- watertight mesh가 필요.(watertight meshes: usually describe meshes consisting of one closed surface.)
+
+3D space에서 sampling하기 위해서 combine uniform sampling and adaptive sampling based on the surface geometry.
 
 
 
+----
+Texture Inference
+----
 
+Eq 1을 이용해서 surface를 정의해서 RGB vector field에서 RGB color를 predict한다.
+
+* arbirtrary topology 와 self-occlusion에서 shape의 texture를 지원해야한다.
+* sampled color의 L1 err의 avg를 texture inference의 objective function으로 한다.
+* 그냥 f_c를 loss function과 training하면 overfitting되더라.
+왜냐하면 f_c는 surface상의 RGB color를 배울 뿐만 아니라 unseen surface의 infer texture with different pose and shape를 배우기 때문이다.
+which pose a significant challenge.
+최종으로는 식5처럼 고쳐졌다.
+
+----
+Multi-View Stereo
+----
+* 추가적인 view는 digitization accuracy를 높인다.
+Multi-view에 대해서는 embedding vector를 다 모아서 (that share the same 3D point) surface 와 texture를 predict하는데 more confident하게 만들었다.
+3D point X is shared by different views, each image can project X on its own image coordinate system by ㅠ(X) and z(X).
+그 후, avg pooling operation으로 multi-view들의 f의 latent features들을 aggregate한다.
+* fused embedding  = mean(모든 latent features)
+* multi -vew architecture로 single input도 그냥 따로 구현 없이 이용.
+f1 : feature embedding network
+f2 : multi-view reasoning network 
+
+최종 f 는 이 둘을 concatenate
  
