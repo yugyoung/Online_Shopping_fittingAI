@@ -1,0 +1,35 @@
+--2020 Article 정리 ---
+
+본 주제에 관해서 보통 3가지의 방법이 Convolutional NN, Semantic Segmentatino, Marching cubes 등과 함께 사용됨.
+1. Parametric methods
+2. methods of recovering human shape and pose
+3. human body recovery methods.
+
+---single image로 3D reconstruction의 한계(문제점)----
+1. ambiguity of the back side shape definition (unseen)
+2. texturing (unseen)
+
+
+-----
+Overview of existing methods
+-----
+<A. Algorithms for recovering human shape and pose>
+1. Algorithm End-to-end Recovery of Human Shape and Pose (June, 2019)
+- End-to-end recovery can determine the locatino of key joints even if the person in the photo is turned away.
+input data: RGB single image
+Encoder -> 3D regression module(반복적으로 3D model 의 loss를 minimize) -> discriminator가 real human인지 아닌지 판단.
+
+Comparation of HMR with other methods by criteria of 3D reconstruction loss, time needed for -->1번은 best results.
+
+--> 옷의 shape은 recover하지 못함.
+2. SiCloPe: Silhouette-Based Clothed People(August, 2019)는 shape와 clothe를 둘 다 reconstruct함.
+--> model texture를 recreates.
+
+3. PIFu: PIxel-Aligned Implicit Function for High-Resolution Clothed Human Digitization (November, 2019).
+input: single or multiple images.
+장점: complicated figures(crumbled clothes, highe heels, hair-style)에 대해서도 weel reconstruct.
+
+<B. The parameterized algorithms of human recovery>
+1. Skinned multi-person linear model (SMPL) - 2015
+trained on some thousnads of 3D models of human bodies(different forms/ figures).
+
