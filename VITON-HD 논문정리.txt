@@ -26,3 +26,11 @@ Img based VITON --> image generation, image synthesis task.
 3. 옷의 Detail이 살아야 해.
 4. body parts는 기본적으로 person의 옷에 의해 cocclude된다. 따라서 이부분도 적절히 render해야 해.
 
+이전 연구들의 다음의 두가지 과정을 거친다는 공통점.
+1. Warping the clothing image initially to fit the human body
+2. FUsing the warped clothing image and the image of the preson that includes pixel-level refinement.
+
+또는 종종, segmentation map을 생성해서 사전에 final image로부터 person's layout을 결정하도록 만드는 방법들도 있다.[9,36,35]
+
+--> 하지만 이 모든 synthetic image들의 resoltuion은 256X192가 보통.
+
