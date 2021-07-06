@@ -1,1 +1,8 @@
-sss
+<VITON-HD: High-Resolution Virtual Try-On via Misalignment-Aware Normalization>
+
+input image: person image,  target clothing image --> output: 1024 X 768 virtual try-on img.
+
+----
+Abstract
+----
+
