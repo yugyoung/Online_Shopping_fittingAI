@@ -1,4 +1,13 @@
-SiCloPe: Silhouette-Based Clothed People
+SiCloPe: Silhouette-Based Clothed People (using CGAN)
 
 single input image --> complete and textured 3D model of a person wearing clothes
+
+개요:
+input ficture에서 segmented 2D silhouette와 inferred 3D points를 뽑음 -> novel view points에 대한 silhouettes을 synthesize -> synthesized silhouettes를 deep visual hull algorithm에 넣음. (for robust 3D shape prediction) -> back view에 대해서 texture를 infer함(using frontal image, segmentation mask 을 CGAN에 넣어서). 
+
+요점: back view can be predicted reliably using an image-to-image translation network. 
+      single -view input으로 multi-view input에 버금가는 좋은 결과이다.
+      
+-----
+Intro
 
