@@ -34,3 +34,9 @@ Img based VITON --> image generation, image synthesis task.
 
 --> 하지만 이 모든 synthetic image들의 resoltuion은 256X192가 보통.
 
+그 이유:
+1. misalignment between the warped clothes and aperson's body results  --> image size가 커질수록 noticeable하더라.
+2. body에 fit 하도록 옷을 warping하는 것이 어렵다.
+
+ClothFlow[9]는 clothe의 optical flow map을 예측하고 desired clothing region하도록 만들었지만, misalignment 를 완전히 제거하기에는 부족.
+
