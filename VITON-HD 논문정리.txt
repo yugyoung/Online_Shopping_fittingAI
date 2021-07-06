@@ -1,8 +1,28 @@
 <VITON-HD: High-Resolution Virtual Try-On via Misalignment-Aware Normalization>
 
-input image: person image,  target clothing image --> output: 1024 X 768 virtual try-on img.
+input image: 1024X768 person image,  target clothing image --> output: 1024 X 768 virtual try-on img.
 
 ----
 Abstract
 ----
+desired body part에 fusing the warped item.
+기존 연구 한계: resolution of synthesized images is still limited to low (e.g., 256x192).
+개요:
+1. segmentation map을 준비
+2. roughly 타겟 옷을 given person's body에 입힌다.
+3. ALgnment-Aware Segment(ALIAS) normalization & ALIAS generator 가 misaligned areas를 다루고, input image의 ㅇetail을 보존한다.
+
+효과:
+VITON-HD는 synthesized image의 baseline에서 높게 성능이 나타난다. 
+
+----
+Intro
+----
+
+Img based VITON --> image generation, image synthesis task.
+합성된 이미지는 다음의 조건을 만족.
+1. person's pose, body, shape, identity 가 보존되어야 해
+2. clothing product가 주어진 body shape, pose 에 대해 자연스레 변형되어야 한다.
+3. 옷의 Detail이 살아야 해.
+4. body parts는 기본적으로 person의 옷에 의해 cocclude된다. 따라서 이부분도 적절히 render해야 해.
 
