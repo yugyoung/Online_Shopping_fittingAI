@@ -1,0 +1,4 @@
+SiCloPe: Silhouette-Based Clothed People
+
+single input image --> complete and textured 3D model of a person wearing clothes
+
