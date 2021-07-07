@@ -40,3 +40,27 @@ Img based VITON --> image generation, image synthesis task.
 
 ClothFlow[9]는 clothe의 optical flow map을 예측하고 desired clothing region하도록 만들었지만, misalignment 를 완전히 제거하기에는 부족.
 
+그래서 본 논문은 이 문제를 해결하겠다.
+by leveragin the pose infrom + segementation map --> the clothing infromation is eliminated thoroughly.
+Using the additional infrom(ALIgnment--Aware Segment(ALIAS)) normalization removes infrom irrelevant to the clothing texture in the misaligned regions.. and propagates the semantic infrom throughout the network.
+이러한 ALIAS의 normalization이 misaligned region 영역과 다른 영역을 standardize하고, standardized activation을 segemntatino map을 이용해서 modulate한다.
+
+각 feature level마다 multi--scale refinement을 통해서 옷의 디테일을 보존한다.
+
+
+--
+Contribution
+--
+1. propose a novel image-based virtual try--on approach(VITON-HD) --> synthesize 1024x768 images..
+2. introduce a clothing-agnostic person representation --> to remove the dependenc on the clothing item originally worn by the person.
+3. address the misalignmnet between the warped clothes and the desired clothing regions by ALIAS normalization & ALIAS generator.
+4. demonstrate the superior performance of our method through experiments with baselines on the newly collected dataset.
+
+-----
+Related Work
+-----
+
+----
+Conditional Image Synthesis
+----
+cGNAS,,pix2pix 
