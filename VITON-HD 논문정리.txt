@@ -105,5 +105,37 @@ VITON task 가 만족해야 하는 조건
 ----
 Problems of Exisitng Person Representations
 ----
+person의 shape를 유지하기 위해서 많은 논문들이 coarse body shape mask를 image 합성의 cue로 제공한다.. but fail to reproduce the body parts elaborately(e.g., hadns).
+ACGPN의 경우, detailed body shape mask를 input으로 주고 NN이 clothign inform을 버리고 대체되도록 만들었지만,, body shape mask는 clothing item의 shape정보도 같이 담겨 있기 때문에 NN과 body shape mask 둘다 완벽히 clothing inform을 없앨 수 없다.
+따라서, OG clothign inform이 완전히 제거되지 않고,, test 단계에서 문제가 되더라.
 
+----
+Clothing-Agnostic Person Representation(Pre-Processing)
+----
+결국 clothing agnostic image를 생성해서 하려고 하는 것은 1.eliminate the shpae of clothing item and 2. preserve the body parts that need to be reproduced.
+predict the segmentation map S[H*W], pose map P [3*H*W]
+by pre-trained networks[7,3]
+
+L: a set of integers indicating the semantic labels.
+S: to remove the clothing region to be replaced and preserve the reset of the image.
+P: to remove the arms, but no the hands, as they are difficult to reprocue.
+S & P --> generate the clothing-agnostic image I_a, clothing-agnostic segmentation map S_a.
+이러한 output은 model이 original clothing infrom을 제거하도록 도와주며, 나머지 영역을 보존하도록 지시한다.
+
+heat map 대신에 quality를 높이기 위해 I_a와 RGB P , S_a를 concatenate하였다.
+
+----
+Segmentation Generation
+----
+G_s: Segmentation Generation, U-Net을 adopt
+G_s가 (S_a,P,c) --> mapping s를 배우도록 train.
+(OG clothing item inform is completely removed.)
+total loss L_s (segmentation generator의 loss) = L_cGAN(conditional adversarial loss between S_^ and S) + 람다(CE)(hypter param corresponding to the 상대적인 중요도 between two losses)L_CE(pixel-wise cross-entropy loss).
+
+----
+Clothing Image Deformation
+----
+target clothing item c를 G_s의 output에 따라 aligned된 것을 deform하기 위해,, CP-VTON의 geometric matching module을 도입했다.
+* TPS transformation: Thin plate splines (TPS) are a spline-based technique for data interpolation and smoothing.
+* 스플라인은 몇개의 점을 기준으로 부드러운 곡선을 그리는 컴퓨터 그래픽스의 방법입니다.
 
