@@ -77,4 +77,12 @@ After standardization, we modulate standardized activation maps with affine para
 Virtual Try-on Approaches.
 ----
 2D image-based approaches와 3D model-based approaches가 있다.
+이전의 work들과 다르게 우리는 photo-realistic images at high resolution을 생성할 수 있다.
+
+----
+Proposed Method
+----
+input: reference image I[3XHXW] and clothing image c[동일] --> output: synthetic image I^[동일], pose, body shape of I와 c의 detail을 보존.
+(I,c,I^)로 straightforward하게 training하면 좋겠지만 이러한 dataset 제작은 costly.
+따라서 우리는 (I, c, I) where the person in the ref image I is already wearing c.를 이용.
 
