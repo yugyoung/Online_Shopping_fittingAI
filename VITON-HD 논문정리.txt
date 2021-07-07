@@ -63,4 +63,18 @@ Related Work
 ----
 Conditional Image Synthesis
 ----
-cGNAS,,pix2pix 
+cGNAS,,pix2pix --> 종종 large spatial deformation에 대해서는 blurry image를 생성함.
+
+----
+Normalization Layers
+----
+external data로 affine param을 추정하는 normalization layer를 conditional normalization layer.라고 한다.
+conditional batch norm, adaptive instance norm 은 style transfer가 사용한다.
+misalignment mask를 external data로 사용하여서 이 misaligned area와 다른 area(within an instance separately)의 평균과 variance를 구하는 normalization alyer를 우리는 제시한다.
+After standardization, we modulate standardized activation maps with affine parameters inferred from human-parsing maps to preserve semantic infromation.
+
+----
+Virtual Try-on Approaches.
+----
+2D image-based approaches와 3D model-based approaches가 있다.
+
