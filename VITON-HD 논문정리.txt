@@ -86,3 +86,24 @@ input: reference image I[3XHXW] and clothing image c[동일] --> output: synthet
 (I,c,I^)로 straightforward하게 training하면 좋겠지만 이러한 dataset 제작은 costly.
 따라서 우리는 (I, c, I) where the person in the ref image I is already wearing c.를 이용.
 
+하지만 이러한 방법은 test time에 model의 generalization ability(일반화 능력)을 해할 수 있으므로 먼저 clothing-agnostic person representation (that 빼다 the clothing information in I and use it as an input)을 구성하였다.
+(입고 있는 옷을 빼서 clothing information을 input으로 주었다는 것))
+Clothing-agnostic person representation 은 pose map 과 segmentation map을 사용하여 clothing informatino in I를 빼낸다.
+그 이후 segmentation generator가 clothing-agnostic person representation에서 segmentation map을 생성ㅇ한다..
+그 후,, defrom c to roughly align it to the human body. 
+Lastly, ALIAS norm 이 misleading inform(in misaligned area after deforming c)을 제거하고 ALIAS generator가 misaligned area를 채우고 clothing detail을 보존한다.
+
+----
+Clothing-Agnostic Person Representation
+----
+I already wearing c.
+VITON task 가 만족해야 하는 조건
+1. original clothing item 은 delete되어야 해.
+2. pose와 body shape을 예측하기 위한 sufficient infrom은 유지 해야해.
+3. face와 hand같이 보존되어야 하는 영역은 person's identity를 나타내기 때문에 유지해야해.
+
+----
+Problems of Exisitng Person Representations
+----
+
+
