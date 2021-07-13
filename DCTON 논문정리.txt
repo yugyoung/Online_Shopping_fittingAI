@@ -1,0 +1,29 @@
+<DCTON>
+TPS: Thin Plate Spline 혹은 약어로 TPS는 기존의 모든 점을 통과해서 지나가는 "최소한으로 굽어진" 부드러운 표면을 찾는 보간법입니다. 세 가지 제어점이 있는 TPS는 평면이고, 세 개 이상은 곡면 표면이고, 세 개 미만은 정의되지 않습니다. 이름 "Thin Plate"는 동일한 제어점을 통과한다면 얇은 금속판의 행동을 시뮬레이션한다는 사실 때문입니다. 얇은 판 스프라인(Thin plate splines)은 특히 이미지 모핑 혹은 모양 탐지/매칭 같은 형상 변환을 표현하는데 잘 사용합니다.
+
+cloth -1. shape 2. texture
+
+
+** Unpaired image-to-image translation is a class of vision problems whose goal is to find the mapping between different image domains using unpaired training data. Cycle-consistency loss is a widely
+used constraint for such problems. However, due to the strict pixel-level
+constraint, it cannot perform shape changes, remove large objects, or
+ignore irrelevant texture.
+
+
+기존 2D based method VTO(virtual try-on)의 한계
+1. lack of paired triplet data(i.e., a reference person, a terget in -shop clotehs, and the person wearing this clotehs).
+-->Inspired by self-supervised learning, 이를 one-way reconstruction 으로 해결. or vanilall cycle consistency generation[18]로 해결. 
+one-way scheme을 사용하는 모델: VITON, CP-VTON, CP-VTON+
+하지만 모델이 입고있떤 옷(즉, mask된 부분)이랑 입력 옷이랑 엄청 다르면 동작 X.
+또한 lack of end-to-end training 으로 generalization potential(일반화)가 어려움.
+
+
+Cycle consistency structure 를 사용하는 모델: CA-GAN
+suffle dtraining samples을 generator에게 feeding시킴.
+하지만 여전히 undesirbale artifacts in texture and body generation
+이는 하나의 network로 texture 와 occluded body parts를 제현하기 어렵기 때문.
+
+
+
+STN: 력 이미지를 대상으로 어떠한 공간적 변형을 수행해야 하는지 학습하도록 합니다. 
+

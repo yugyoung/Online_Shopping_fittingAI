@@ -1,0 +1,3 @@
+<img2img translation- PatchGan Discriminator>
+- PixelGAN은 1 x 1 patch에 대해 진위 여부를 확인하고, PatchGAN은 N x N 사이즈의 패치 영역에 대해 진위를 판단합니다.
+- ImageGAN은 저희가 일반적으로 알고 있는 VanillaGAN처럼 전체 영역에 대해 진위 여부

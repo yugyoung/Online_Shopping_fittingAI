@@ -1,0 +1,26 @@
+<DeepFake>
+- AutoEncoder: DNN architecture used to learn a representation in an unsupervised manner.
+- 주요 feature를 압축(중요한 feature 추출)
+  ㄴ compressed low dimensional representation of the input
+
+DeepFakes 1) Exraction (OpenCV)
+사람의 얼굴을  추출.
+추가적으로, alignment file(얼굴 주요 landmark)과 mask 파일을 만들 수 있음.
+- 각 video에서 얼굴부분만 frame 단위로 추출해(30초 이상 1000장 이미지 추출)
+
+
+- 피해자의 image에서 얼굴의 identity를 auto encoder 로 추출.  (후에 target img에 입힐 것임)
+- Encoder를 공유하도록 만듦.
+- 따라서 Encoder 파트에서 학습이 되는 featrure: 두 얼굴의 공통부분(eyes, nose, mouth position) 
+- decoder는 각각의 video마다 구분되어 있기 때문에 identity feature: size of mouth, shape of eyes(두 이미지의 차이)를 학습하게 됨.
+
+Decoder B가 피해자의 identity를 잘 학습할 수 있게 됨.
+Bottlenect layer(Identity layer)에서는 특정 사람에 대한 identity는 배제가 되고 외관이나 눈코입의 위치만 시각화 됨.
+
+DeepFake 3단계) Converting
+
+
+data)
+- src, victim약 천장(30초 video) ~ 만장 정도
+- high qulaity의 input일수록 더 좋음
+- Original input; 64*64

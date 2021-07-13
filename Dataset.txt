@@ -1,0 +1,49 @@
+<Fashion Data>
+- VITON_traindata(PF-AFN_train):
+train_color: Top cloth(192*256)
+train_densepose: desepose Net의 .npy
+train_edge: 옷의 edge(black-white)(192*256)
+train_img: train_color 쌍에 맞는 옷을 입고 있는 모델 착샷(192*256)
+train_label: gray scale?의 human body segmentation map(192*256)
+train_pose: .json
+- viton_resize(CP-VTON):
+train/cloth: Top cloth(train_color와 동일)(192*256)
+train/cloth-mask: 옷의 edge(black-white)(train_edge와 동일)(192*256)
+train/image: train_color 쌍에 맞는 옷을 입고 있는 모델 착샷(192*256)
+train/image_parse: .png/ RGB color의 human body segmentation map (192*256)
+train/pose: .json
+- VITON dataset_kaggle(다운로드):
+ACGPN_TrainDasta/train_color: Top cloth(192*256)
+ACGPN_TrainDasta/train_colormask: ??(512 x 512) 선만 그어져 있음.
+ACGPN_TrainDasta/train_edge: 옷의 edge(black-white)(192*256)
+ACGPN_TrainDasta/train_img: train_color 쌍에 맞는 옷을 입고 있는 모델 착샷(192*256)
+ACGPN_TrainDasta/train_label:  gray scale?의 human body segmentation map(192*256)
+ACGPN_TrainDasta/train_mask: ?? (512 x 512) 
+ACGPN_TrainDasta/train_pose: .json/
+- DeepFashion dataset:
+C:\Users\cv_lab\AppData\Local\Temp\Temp1_DeepFashion-20210701T043103Z-003.zip\DeepFashion\In-shop Clothes Retrieval Benchmark\Anno\densepose\img_iuv.zip\img
+Men:
+   ㄴ Denim: front/front_IUV(segmentation)/side/side_IUV/back/back_IUV/additional/additional_IUV (256*256)
+  ㄴ Jackets_Vests: ''/full/flat(옷)/flat_IUV(옷 segmentation) (256*256)
+   ㄴ Pants:''
+  ㄴ Shirts_Polos:''
+   ㄴ Shorts:''
+   ㄴ Suiting:''
+   ㄴ Sweaters:''
+   ㄴ Sweatshirts_Hoodies:''
+   ㄴ Tees_Tanks:''
+Women: 
+ ㄴ Blouses_Shirts: front/front_IUV(segmentation)/side/side_IUV/back/back_IUV/additional/additional_IUV (256*256)
+  ㄴ Cardigans: ''/full/flat(옷)/flat_IUV(옷 segmentation) (256*256)
+   ㄴ Denim:''
+  ㄴ Dresses:''
+   ㄴ Graphic_Tees:''
+   ㄴ Jackets_Coats:''
+   ㄴ Leggings:''
+   ㄴ Pants:''
+   ㄴ Rompers_Jumpsuits:'
+   ㄴ Shorts:
+    ㄴ Skirts:
+    ㄴ Sweaters:
+    ㄴ Sweatshirts_Hoodies:
+    ㄴ Tees_Tanks:
